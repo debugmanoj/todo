@@ -8,7 +8,7 @@ function TopBar({todo,setTodo,completed,setCompleted}) {
  
    let handleDrop=(e)=>{
     let gotcha=e.target.innerText
-    setCompleted(gotcha==="Completed"?"Not Completed":"Completed")
+    setCompleted(gotcha==="Compl"?"Not Completed":"Completed")
    }
   let handleClick=()=>{    
     let id=todo.length?todo[todo.length-1].id+1 :1

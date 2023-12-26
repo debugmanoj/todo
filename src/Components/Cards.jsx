@@ -9,7 +9,7 @@ function Cards({todo,setTodo,completed,setCompleted}) {
   }
   //Edit
   let Edit=()=>{
-    
+    console.log(todo.id)
   }
   return <div className="col">
                 <div className="card" style={{ width: '18rem' }}>
