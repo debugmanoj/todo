@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Edit from './Edit'
-function Cards({todo,setTodo,completed,setCompleted}) {
+import TopBar from './TopBar';
+import { Navigate,Link } from 'react-router-dom';
+
+function Cards({todo,setTodo,completed,setCompleted,handleEditChange}) {
+  let [Toggle,setToggle]=useState("")
+  let [save,setSave]=useState("Edit")
   //Delete
   let Delete=()=>{
     setTodo((prevTodo) => { 
@@ -8,9 +13,21 @@ function Cards({todo,setTodo,completed,setCompleted}) {
       return prevTodo.filter((item) => item.id !== todo.id)});
   }
   //Edit
-  let Edit=()=>{
-    console.log(todo.id)
+  let handleEdits=(a)=>{
+    if(a===""){
+      setSave("Edit");  
+      setToggle("")
+    }
+    else{
+      setToggle(Toggle === "" ? <Edit todo={todo} setToggle={setToggle} toggle={Toggle} setTodo={setTodo} id={todo.id} handleEdits={handleEdits} /> : "");
+      setSave(save==="Edit"?"Save":"Edit")
+    }
+    
+    
+    // handleEditChange(todo.title, todo.description,"Edit Todo");
   }
+
+
   return <div className="col">
                 <div className="card" style={{ width: '18rem' }}>
                     <div className="card-body">
@@ -28,13 +45,16 @@ function Cards({todo,setTodo,completed,setCompleted}) {
                       </div>
                       
                     </div>
+          
                     <div className="d-flex justify-content-end w-auto">                        
-                        <div><button className="btn btn-secondary btn-sm w-auto" onClick={Edit} >Edit</button></div>
+                        <button className='btn btn-secondary btn-sm w-auto' onClick={handleEdits}>{save}</button>
+                        
                         &nbsp;
                         <div><button className="btn btn-secondary btn-sm w-auto" onClick={Delete}>Delete</button></div>
                        
                         
                     </div>
+                    <div>{Toggle}</div>
                   </div>
             </div> 
  

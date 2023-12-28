@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import TopBar from './Components/TopBar'
 import Cards from './Components/Cards'
 
+
 function App() {
   let [todo,setTodo]=useState([
     {
@@ -29,6 +30,7 @@ function App() {
 let [completed,setCompleted]=useState("All")
   return <>
   <TopBar todo={todo} setTodo={setTodo} completed={completed} setCompleted={setCompleted}/>
+
   </>
 }
 

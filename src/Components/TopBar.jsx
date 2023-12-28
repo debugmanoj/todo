@@ -5,11 +5,22 @@ function TopBar({todo,setTodo,completed,setCompleted}) {
   
   let [title,setTitle]=useState("")
   let [description,setDescription]=useState("")
- 
+  let [editTitle, setEditTitle] = useState('');
+  let [editDescription, setEditDescription] = useState('');
+  let [editTodo,setEditTodo]=useState("Add Todo")
+  //Receiving the function from Card
+  const handleEditChange = (editedTitle, editedDescription,changeTodo) => {
+    setEditTitle(editedTitle);
+    setEditDescription(editedDescription);
+    setEditTodo(changeTodo)
+  };
+
+  //Changing the button completed ||  not completed
    let handleDrop=(e)=>{
     let gotcha=e.target.innerText
     setCompleted(gotcha==="Completed"?"Not Completed":"Completed")
    }
+   //Adding the new values to card
   let handleClick=()=>{    
     let id=todo.length?todo[todo.length-1].id+1 :1
     let newArray=[...todo]
@@ -21,6 +32,9 @@ function TopBar({todo,setTodo,completed,setCompleted}) {
 
     // console.log(newArray);
     setTodo(newArray);
+    setTitle('');
+    setDescription('');
+  
    
   }
   return <>
@@ -28,13 +42,13 @@ function TopBar({todo,setTodo,completed,setCompleted}) {
     <div className="container overflow-hidden text-center">
         <div className="row gx-5">
           <div className="col">
-           <div className="p-3"><input placeholder="Name" type="text" onChange={(e)=>{setTitle(e.target.value)}}/></div>
+           <div className="p-3"><input type="text"  value={title} placeholder='Todo' onChange={(e)=>{setTitle(e.target.value)}}/></div>
           </div>
           <div className="col">
-            <div className="p-3"><input placeholder="Todo Description" type="text" onChange={(e)=>{setDescription(e.target.value)}}/></div>
+            <div className="p-3"><input    type="text"   value={description} placeholder='Description' onChange={(e)=>{setDescription(e.target.value)}}/></div>
           </div>
           <div className="col">
-            <div className="p-3"><button onClick={handleClick}>Add todo</button></div>
+            <div className="p-3"><button onClick={handleClick}>{editTodo}</button></div>
           </div>
         </div>
       </div>
@@ -58,7 +72,7 @@ function TopBar({todo,setTodo,completed,setCompleted}) {
   <div className="row">
   {
     todo.map((e,i)=>{
-      return <Cards completed={completed} setCompleted={setCompleted} todo={e} setTodo={setTodo} key={i}/>
+      return <Cards handleEditChange={handleEditChange} handle editDescription={editDescription} completed={completed} setCompleted={setCompleted} todo={e} setTodo={setTodo} key={i}/>
     })
   }
   </div>
