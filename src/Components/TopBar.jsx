@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Cards from './Cards'
 
 function TopBar({todo,setTodo,completed,setCompleted}) {
-  
+
   let [title,setTitle]=useState("")
   let [description,setDescription]=useState("")
   let [editTitle, setEditTitle] = useState('');
@@ -16,12 +16,29 @@ function TopBar({todo,setTodo,completed,setCompleted}) {
   };
 
   //Changing the button completed ||  not completed
+
+  //handledrop
    let handleDrop=(e)=>{
-    let gotcha=e.target.innerText
-    setCompleted(gotcha==="Completed"?"Not Completed":"Completed")
+    
+    if(e.target.innerText==="All"){
+      let sample=e.target.innerText
+      setCompleted("All")
+    }
+    else{
+      let gotcha=e.target.innerText
+      setCompleted(gotcha==="Completed"?"Completed":"Not Completed")
+    }
+    
    }
+   
+
+
+
    //Adding the new values to card
   let handleClick=()=>{    
+    setTodo((prevTodo)=>{
+      prevTodo.map((item)=>console.log(item))
+    })
     let id=todo.length?todo[todo.length-1].id+1 :1
     let newArray=[...todo]
     newArray.push({
@@ -36,6 +53,15 @@ function TopBar({todo,setTodo,completed,setCompleted}) {
     setDescription('');
   
    
+  }
+  let Completed=()=>{
+    let b=todo.filter((e,i)=>{
+      if(e.status===true){
+        completedfilter.push(e);
+      }
+    })
+   
+
   }
   return <>
   <h1 className="text-center HeaderColor">My Todo</h1>
@@ -62,8 +88,11 @@ function TopBar({todo,setTodo,completed,setCompleted}) {
             {completed}
           </button>
           <ul className="dropdown-menu">
-            <a onClick={handleDrop}>Completed</a>
-            <a onClick={handleDrop}>Not Completed</a>
+          <li><a onClick={handleDrop}>All</a></li>
+            <li><a onClick={handleDrop}>Completed</a></li>
+            <li><a onClick={handleDrop}>Not completed</a></li>
+            
+       
           </ul>
         </div></span></h4>
 </div>
@@ -71,8 +100,30 @@ function TopBar({todo,setTodo,completed,setCompleted}) {
       <div className="container">
   <div className="row">
   {
+    
+    completed==="All"?
+    //ALL
     todo.map((e,i)=>{
-      return <Cards handleEditChange={handleEditChange} handle editDescription={editDescription} completed={completed} setCompleted={setCompleted} todo={e} setTodo={setTodo} key={i}/>
+      return <Cards  handleEditChange={handleEditChange} handle editDescription={editDescription} completed={completed} setCompleted={setCompleted} todo={e} setTodo={setTodo}    key={i}/>
+    })
+    
+    :completed==="Completed"?
+    
+    //Completed
+    todo.map((e,i)=>{
+      if(e.status===true){
+        return <Cards  handleEditChange={handleEditChange} handle editDescription={editDescription} completed={completed} setCompleted={setCompleted} todo={e} setTodo={setTodo}    key={i}/>
+      }
+      
+    })
+
+
+    //Not Completed
+    :todo.map((e,i)=>{
+      if(e.status===false){
+        return <Cards handleEditChange={handleEditChange} handle editDescription={editDescription} completed={completed} setCompleted={setCompleted} todo={e} setTodo={setTodo}  key={i}/>
+      }
+      
     })
   }
   </div>
@@ -84,3 +135,10 @@ function TopBar({todo,setTodo,completed,setCompleted}) {
 }
 
 export default TopBar
+// todo.filter((e,i)=>{
+    
+//   if(e.status!==false){
+//     <Cards handleEditChange={handleEditChange} handle editDescription={editDescription} completed={completed} setCompleted={setCompleted} todo={e} setTodo={setTodo}  key={i}/>
+//   }
+  
+// })

@@ -3,7 +3,7 @@ import Edit from './Edit'
 import TopBar from './TopBar';
 import { Navigate,Link } from 'react-router-dom';
 
-function Cards({todo,setTodo,completed,setCompleted,handleEditChange}) {
+function Completed({e}) {
   
   let [Toggle,setToggle]=useState("")
   let [save,setSave]=useState("Edit")
@@ -61,4 +61,4 @@ function Cards({todo,setTodo,completed,setCompleted,handleEditChange}) {
  
 }
 
-export default Cards
+export default Completed
